@@ -1,0 +1,18 @@
+name: Türkçe Yazım Denetimi
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  vale-turkish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tolgakaratas/vale-turkish@v1.1.0
+        with:
+          files: 'docs/tr/'
+          min_alert_level: 'warning'
+          no_spelling: 'true'
