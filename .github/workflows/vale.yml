@@ -7,12 +7,25 @@ on:
     branches: [main]
 
 jobs:
-  vale-turkish:
+  # Senaryo 1: GitHub Actions ile (önerilen)
+  vale-turkish-action:
+    name: "Vale Turkish Action"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: tolgakaratas/vale-turkish@v1.1.0
         with:
           files: 'docs/tr/'
           min_alert_level: 'warning'
           no_spelling: 'true'
+
+  # Senaryo 2: Pre-commit ile
+  vale-turkish-precommit:
+    name: "Vale Turkish Pre-commit"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Pre-commit kur ve çalıştır
+        run: |
+          pip install pre-commit
+          VALE_TURKISH_NO_SPELLING=1 pre-commit run vale-turkish --all-files

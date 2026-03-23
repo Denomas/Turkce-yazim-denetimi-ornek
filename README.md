@@ -15,5 +15,27 @@ docs/
 
 ## Entegrasyonlar
 
-- **Pre-commit:** `.pre-commit-config.yaml` ile her commit'te otomatik denetim
-- **GitHub Actions:** `.github/workflows/vale.yml` ile CI/CD pipeline'da denetim
+### Pre-commit
+
+`.pre-commit-config.yaml` ile her commit'te otomatik denetim:
+
+```yaml
+repos:
+  - repo: https://github.com/tolgakaratas/vale-turkish
+    rev: v1.1.0
+    hooks:
+      - id: vale-turkish
+        args: [--minAlertLevel=warning]
+        files: ^docs/tr/
+```
+
+### GitHub Actions
+
+`.github/workflows/vale.yml` dosyasında 2 farklı senaryo gösterilmektedir:
+
+| Senaryo | Açıklama | Nasıl çalışır |
+|---------|----------|---------------|
+| `vale-turkish-action` | GitHub Actions composite action ile | `uses: tolgakaratas/vale-turkish@v1.1.0` |
+| `vale-turkish-precommit` | Pre-commit üzerinden CI'da | `pre-commit run vale-turkish --all-files` |
+
+Kendi ortamınıza uygun senaryoyu seçebilirsiniz.
