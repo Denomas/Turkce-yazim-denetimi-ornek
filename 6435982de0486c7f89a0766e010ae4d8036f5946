@@ -1,0 +1,25 @@
+.github/workflows/vale.yml
+  1d815db16820323f 10-12,15,21-31
+README.md
+  1d815db16820323f 18-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.17",
+  "base_commit_sha": "6435982de0486c7f89a0766e010ae4d8036f5946",
+  "prompts": {
+    "1d815db16820323f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "be17d1d5-b85b-442f-8fb0-a279c748dda5",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Tolga Karataş <tolgakaratas@gmail.com>",
+      "messages": [],
+      "total_additions": 39,
+      "total_deletions": 4,
+      "accepted_lines": 39,
+      "overriden_lines": 0
+    }
+  }
+}
