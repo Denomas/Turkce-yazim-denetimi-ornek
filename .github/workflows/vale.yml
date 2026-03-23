@@ -6,26 +6,42 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  NO_COLOR: "1"
+
 jobs:
-  # Senaryo 1: GitHub Actions ile (önerilen)
-  vale-turkish-action:
-    name: "Vale Turkish Action"
+  # Temiz belge testi — hata çıkmamalı
+  clean-test:
+    name: "Temiz Belge Testi"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: tolgakaratas/vale-turkish@v1.1.0
+      - uses: Denomas/Turkce-yazim-denetimi@v1
         with:
-          files: 'docs/tr/'
+          files: 'docs/tr/giris.md'
           min_alert_level: 'warning'
           no_spelling: 'true'
 
-  # Senaryo 2: Pre-commit ile
-  vale-turkish-precommit:
-    name: "Vale Turkish Pre-commit"
+  # Hatalı belge testi — Vale hataları yakalamalı
+  dirty-test:
+    name: "Hatalı Belge Testi (Beklenen Hatalar)"
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: Denomas/Turkce-yazim-denetimi@v1
+        with:
+          files: 'docs/tr/hatali-belge.md'
+          min_alert_level: 'warning'
+          no_spelling: 'true'
+
+  # Pre-commit entegrasyon testi
+  precommit-test:
+    name: "Pre-commit Testi"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Pre-commit kur ve çalıştır
+      - name: Pre-commit kur ve çalıştır (sadece temiz dosya)
         run: |
           pip install pre-commit
-          VALE_TURKISH_NO_SPELLING=1 pre-commit run vale-turkish --all-files
+          VALE_TURKISH_NO_SPELLING=1 pre-commit run vale-turkish --files docs/tr/giris.md

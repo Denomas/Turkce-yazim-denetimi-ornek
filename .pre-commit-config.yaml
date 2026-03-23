@@ -1,6 +1,6 @@
 repos:
-  - repo: https://github.com/tolgakaratas/vale-turkish
-    rev: v1.1.0
+  - repo: https://github.com/Denomas/Turkce-yazim-denetimi
+    rev: v1
     hooks:
       - id: vale-turkish
         args: [--minAlertLevel=warning]
